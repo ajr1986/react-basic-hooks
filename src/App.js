@@ -4,9 +4,13 @@ import Appointment from './components/Appointment';
 
 function App() {
 
-  const [appointments, setAppointments] = useState(
-    JSON.parse(localStorage.getItem('appointments'))
-  );
+  let initialState = JSON.parse(localStorage.getItem('appointments'));
+
+  if(initialState === null){
+    initialState = [];
+  }
+
+  const [appointments, setAppointments] = useState(initialState);
 
   const addAppointment = appointment => {
 
@@ -27,7 +31,7 @@ function App() {
   useEffect(() => {
 
     localStorage.setItem('appointments', JSON.stringify(appointments));
-    
+
   }, [appointments])
 
   const title = Object.keys(appointments).length === 0 ? 'No hay citas' : 'Administrar citas';
